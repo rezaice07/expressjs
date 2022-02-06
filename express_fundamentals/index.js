@@ -1,14 +1,40 @@
-const express=require('express');
-const app=express();
+const express = require('express');
+const app = express();
 
-app.delete('/',  (req, res)=> {
-    res.send('DELETE request to homepage')
-  })
+//use of param
+app.param(['id', 'urlSlug'], (req, rew, next, pValue,pName) => {
+ 
+  let cParams=pValue.split(' ')
+  console.log(cParams);
+  //console.log(pName); 
 
-//listiner
-app.listen(3001,()=>{
-    console.log('Server is running on port 3001');
+  const id= cParams[0];
+  const urlSlug=cParams[1];
+
+  const customerInfo = {
+    id: id,
+    urlSlug:urlSlug,
+    firstName: 'Rejwanul',
+    lastName: 'Reja'
+  }
+
+  req.customerInfo = customerInfo;
+  req.body = { email: 'rezaice07@gmail.com' };
+  next();
+});
+
+
+
+
+app.get('/customer/:id/detail/:urlSlug', (req, res) => {
+  console.log(req.customerInfo);
+  //console.log(req.body);
+  //console.log(req.params);
+  res.send('Customer homepage')
 })
 
+//listiner
+app.listen(3001, () => {
+  console.log('Server is running on port 3001');
+})
 
-//https://www.youtube.com/watch?v=5q3NeKhhLQ0&list=PLHiZ4m8vCp9PHnOIT7gd30PCBoYCpGoQM&index=17&ab_channel=LearnwithSumit-LWS-Bangladesh
