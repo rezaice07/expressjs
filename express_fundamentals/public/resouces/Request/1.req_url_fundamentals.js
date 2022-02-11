@@ -30,6 +30,7 @@ app.get('/user/:id',(req,res)=>{
   console.log(req.protocol); // http
   console.log(req.params); // { id: '5454' }
   console.log(req.query); // { username: 'rejawebs' }
+  console.log(req.route);
   res.send('This is home');  
 });
 

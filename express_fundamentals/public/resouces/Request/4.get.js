@@ -25,6 +25,6 @@ by using reg.get('header_name') method.
 
 References:
 -----------
-https://www.youtube.com/watch?v=sA5Hno7n01g&list=PLHiZ4m8vCp9PHnOIT7gd30PCBoYCpGoQM&index=19&ab_channel=LearnwithSumit-LWS-Bangladesh
+http://expressjs.com/en/4x/api.html#req.get
 
 */
