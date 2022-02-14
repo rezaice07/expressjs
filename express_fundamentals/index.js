@@ -1,12 +1,14 @@
 const express=require('express');
 const app=express();
 
-app.use(express.json());
+app.set('view engine','ejs');
 
-app.post('/user',(req,res)=>{
-  console.log(req.get('content-type'));
-  console.log(req.body);
-  res.send('this is post from post method');
+
+app.get('/product/:id/urlslug/:urlslug',(req,res)=>{
+  res.render('pages/product-detail',{
+    id:req.params.id,
+    urlslug:req.params.urlslug
+  });
 })
 
 //listiner
@@ -16,15 +18,30 @@ app.listen(3001,()=>{
 
 
 /*
-get
+render locals
 ------------------------
 Step -01: 
 --------
-If you send header info to server end, it is possible to get then actual name
-by using reg.get('header_name') method.
+install ejs
+cli: npm i ejs
+
+Step 02:
+-------------
+create a ffile views/pages/product-detail.ejs
+
+Step 03:
+----------
+
+
+Finally run the above developed code
+
+
+
 
 References:
 -----------
-https://www.youtube.com/watch?v=sA5Hno7n01g&list=PLHiZ4m8vCp9PHnOIT7gd30PCBoYCpGoQM&index=19&ab_channel=LearnwithSumit-LWS-Bangladesh
+http://expressjs.com/en/4x/api.html#res.render
 
 */
+
+//https://www.youtube.com/watch?v=sA5Hno7n01g&list=PLHiZ4m8vCp9PHnOIT7gd30PCBoYCpGoQM&index=20&ab_channel=LearnwithSumit-LWS-Bangladesh
