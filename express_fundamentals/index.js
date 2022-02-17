@@ -1,51 +1,45 @@
 const express = require('express');
-const cookieParser = require('cookie-parser');
 const app = express();
+const multer = require('multer');
 
-const adminRouter = express.Router();
 
-//Start adminRouter
-//logger middleware when wrapped
+//to configure file upload folder
+const UPLOAD_FOLDER = './webshared/uploads';
 
-const loggerWrapper = (options) => {
-  return (
-    (req, res, next) => {
-      if (options.log) {
-        const logDetails = `${new Date(Date.now()).toLocaleDateString()}-${req.method}-${req.originalUrl}-${req.protocol}-${req.ip}`;
-        console.log(logDetails);
-        next();
-      }
-      else {
-        throw new Error('This is an error');
-      }
-    }
-  )
-}
+//prepare the final multer upload object
+let upload = multer({
+  dest: UPLOAD_FOLDER,
+  limits:{
+    fileSize:100000, //1MB
+  },
+  fileFilter:(req,res,cb)=>{
+    if(
+      
+    )
+  }
+});
 
-//error logger middleware
-const errorLogger = (err, req, res, next) => {
-  console.log(err.message);
-  res.status(500).send('There was a server side error');
-}
-
-adminRouter.use(loggerWrapper({ log: true }));
-
-adminRouter.use(errorLogger);
-
-adminRouter.get('/orderhistory', (req, res) => {
-  res.send('this is order histor of a customer');
+app.post('/profile/upload', upload.fields([
+  { name: 'profilePhoto', maxCount: 1 },
+  { name: 'signature', signature: 1 }
+]), (req, res) => {
+  res.send("Upload Completed");
+  console.log('Completed')
+  res.end();
 })
 
-app.use('/customer', adminRouter);
 
-//End adminRouter
+app.get('/about', (req, res) => {
+  res.send('This is about page')
+});
 
-//Main Route
-app.get('/product/:id/urlslug/:urlslug', (req, res) => {
-  res.send('Product Details');
-  console.log('Product Details')
+app.use((err, req, res, next) => {
+  if (err) {
+    res.status(500).send(err.message);
+  }
+  res.status(500).send('Error on server side');
+  //res.end();
 })
-
 
 
 //listiner
@@ -55,16 +49,25 @@ app.listen(3001, () => {
 
 
 /*
-06.middleware-error-handle-with-wrapper.js
+01.fileupload.js
 ------------------------
-Step -01: 
---------
-check response of a request in admin router by changing value at 
-loggerWrapper({ log: true }) or loggerWrapper({ log: false })
+Installation:
+cli: npm i multer
+
+Separate Server Creation:
+In any directory, index.html that will run on node server.
+cli: npx http-server
+
+Options:
+For single file uplaod, use upload.single('profilePhoto'), here profilePhoto name of the file
+
+For multiple file upload, use upload.array('profilePhoto',2). here profilePhoto name of the file and 2 means no of file
+
+
 
 Step 02:
 ----------
 Finally run the above developed code
 
-https://www.youtube.com/watch?v=JC8pvR7ZOiE&list=PLHiZ4m8vCp9PHnOIT7gd30PCBoYCpGoQM&index=20&ab_channel=LearnwithSumit-LWS-Bangladesh
+https://www.youtube.com/watch?v=SAZU6-Ucrno&list=PLHiZ4m8vCp9PHnOIT7gd30PCBoYCpGoQM&index=21&ab_channel=LearnwithSumit-LWS-Bangladesh
 */
