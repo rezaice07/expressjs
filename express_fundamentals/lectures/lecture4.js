@@ -7,9 +7,15 @@ app.route('/event').get((req,res)=>{
   //here render instead of send
 });
 app.get('/contactus',(req,res)=>{
-res.format({
+  console.log(`${res.headersSent}`);
+  res.render('pages/contactus',{
+    name:'Junainah Yousra Roha',
+    email:'roha@gmail.com',
+    address:'Rangpur, Dhaka, Bangladesh'
+  }); 
   
-});  
+  res.end();
+  //console.log(`${res.headersSent}`);
 })
 
 //listiner

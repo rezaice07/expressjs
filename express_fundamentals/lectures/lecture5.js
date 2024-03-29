@@ -7,9 +7,17 @@ app.route('/event').get((req,res)=>{
   //here render instead of send
 });
 app.get('/contactus',(req,res)=>{
-res.format({
   
-});  
+  let jsonData={
+    name:'Diana',
+    address:'Youtube'
+  };
+
+  res.json(jsonData);  
+  res.end();
+
+  //send status and end by one statement is
+  //res.sendStatus(404);
 })
 
 //listiner
